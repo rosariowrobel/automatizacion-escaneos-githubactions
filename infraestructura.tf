@@ -92,7 +92,12 @@ resource "aws_instance" "infra_ec2_instance" {
   ami           = var.ami_id
   instance_type = var.instance_type
   subnet_id     = aws_subnet.infra_public_subnet.id
-  vpc_security_group_ids = [aws_security_group.infra_security_group.id] # Cambiar security_group_ids por vpc_security_group_ids
+  vpc_security_group_ids = [aws_security_group.infra_security_group.id]
+
+  # Bloque para configurar el disco raíz
+  root_block_device {
+    encrypted = true # Habilitar cifrado
+  }
 
   tags = {
     Name = "Infra-EC2-Instance"
